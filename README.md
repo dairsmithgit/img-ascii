@@ -1,6 +1,6 @@
-### Img to Ascii art generator
+## Img to Ascii art generator
 
-## Future Plans
+### Future Plans
 
 - Multiple symbol sets
   - all nums, all letters, kanji, binary
