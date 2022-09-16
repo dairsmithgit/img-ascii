@@ -44,58 +44,64 @@ class AsciiEffect {
         console.log(this.#pixels.data);
     }
 
+    // arrays with characters I want to use
+    #japanese = ['の', 'か', 'と', 'い', 'る', 'ン', 'ト', 'ス', 'ル', 'は', 'イ', 'に', 'ツ', 'カ', 'テ', 'コ', 'ホ', 'た', 'ム', 'ナ', 'を', 'ケ', 'て', 'ヌ', 'ヘ'];
+    #letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y'];
+    #symbols = ['.', '[', '^', '*', ']', '/', ':', '_', '%', '>', '(', ')', '~', '•', ';', '&', '£', '¶', '$', '#', 'R', 'E', 'A', 'L', 'M'];
+    #binary = ['0', '1', '0', '1', '0', '1', '0', '1', '0', '1', '0', '1', '0', '1', '0', '1', '0', '1', '0', '1', '0', '1', '0', '1', '0'];
+
     // averageColorValue passed in as acv
-    #convertToSymbol(acv) {
+    #convertToSymbol(acv, arr) {
         if (acv > 250) {
-            return '.';
+            return arr[0];
         } else if (acv > 240) {
-            return '\u005B'; // [
+            return arr[1]; // [
         } else if (acv > 230) {
-            return '^';
+            return arr[2];
         } else if (acv > 220) {
-            return '*';
+            return arr[3];
         } else if (acv > 210) {
-            return '\u005D'; // ]
+            return arr[4]; // ]
         } else if (acv > 200) {
-            return '/';
+            return arr[5];
         } else if (acv > 190) {
-            return '\u003A'; // :
+            return arr[6]; // :
         } else if (acv > 180) {
-            return '_';
+            return arr[7];
         } else if (acv > 170) {
-            return '%';
+            return arr[8];
         } else if (acv > 160) {
-            return '>';
+            return arr[9];
         } else if (acv > 150) {
-            return 'L';
+            return arr[10];
         } else if (acv > 140) {
-            return ';';
+            return arr[11];
         } else if (acv > 130) {
-            return '0';
+            return arr[12];
         } else if (acv > 120) {
-            return 'U';
+            return arr[13];
         } else if (acv > 110) {
-            return 'E';
+            return arr[14];
         } else if (acv > 100) {
-            return 'G';
+            return arr[15];
         } else if (acv > 90) {
-            return 'M';
+            return arr[16];
         } else if (acv > 80) {
-            return '\u00B6'; // ¶
+            return arr[17]; // ¶
         } else if (acv > 70) {
-            return 'O';
+            return arr[18];
         } else if (acv > 60) {
-            return 'R';
+            return arr[19];
         } else if (acv > 50) {
-            return '\u0024'; // $
+            return arr[20]; // $
         } else if (acv > 40) {
-            return 'S';
+            return arr[21];
         } else if (acv > 30) {
-            return 'A';
+            return arr[22];
         } else if (acv > 20) {
-            return 'B';
+            return arr[23];
         } else if (acv > 10) {
-            return '\u0023'; // #
+            return arr[24]; // #
         }
     }
 
@@ -114,7 +120,7 @@ class AsciiEffect {
                     const total = red + green + blue;
                     const averageColorValue = total / 3;
                     const color = `rgb(${red}, ${green}, ${blue})`;
-                    const symbol = this.#convertToSymbol(averageColorValue);
+                    const symbol = this.#convertToSymbol(averageColorValue, this.#japanese);
                     if (total > 30) this.#imageCellArray.push(new Cell(x, y, symbol, color));
                 }
             }
