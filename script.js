@@ -8,10 +8,28 @@ image1.src = exampleImgs[0];
 
 const sizeSlider = document.getElementById('resolution');
 const inputLabel = document.getElementById('resolutionLabel');
+const japaneseBtn = document.getElementById('japanese');
+const lettersBtn = document.getElementById('letters');
+const symbolsBtn = document.getElementById('symbols');
+const binaryBtn = document.getElementById('binary');
 
+// event listeners for controls
 sizeSlider.addEventListener('change', () => {
     handleSlider();
-})
+});
+
+japaneseBtn.addEventListener('click', () => {
+    handleJpSet();
+});
+lettersBtn.addEventListener('click', () => {
+    handleLetterSet();
+});
+symbolsBtn.addEventListener('click', () => {
+    handleSymSet();
+});
+binaryBtn.addEventListener('click', () => {
+    handleBinSet();
+});
 
 // cell class
 class Cell {
@@ -26,6 +44,8 @@ class Cell {
         ctx.fillText(this.symbol, this.x, this.y);
     }
 }
+
+let charIndex = 0;
 
 // ascii class and private class fields
 class AsciiEffect {
@@ -49,6 +69,8 @@ class AsciiEffect {
     #letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y'];
     #symbols = ['.', '[', '^', '*', ']', '/', ':', '_', '%', '>', '(', ')', '~', '•', ';', '&', '£', '¶', '$', '#', 'R', 'E', 'A', 'L', 'M'];
     #binary = ['0', '1', '0', '1', '0', '1', '0', '1', '0', '1', '0', '1', '0', '1', '0', '1', '0', '1', '0', '1', '0', '1', '0', '1', '0'];
+
+    #characterSet = [this.#japanese, this.#letters, this.#symbols, this.#binary];
 
     // averageColorValue passed in as acv
     #convertToSymbol(acv, arr) {
@@ -105,7 +127,7 @@ class AsciiEffect {
         }
     }
 
-    #scanImage(cellSize) {
+    #scanImage(cellSize, arr) {
         this.#imageCellArray = [];
         for (let y = 0; y < this.#pixels.height; y += cellSize) {
             for (let x = 0; x < this.#pixels.width; x += cellSize) {
@@ -120,7 +142,7 @@ class AsciiEffect {
                     const total = red + green + blue;
                     const averageColorValue = total / 3;
                     const color = `rgb(${red}, ${green}, ${blue})`;
-                    const symbol = this.#convertToSymbol(averageColorValue, this.#japanese);
+                    const symbol = this.#convertToSymbol(averageColorValue, this.#characterSet[charIndex]);
                     if (total > 30) this.#imageCellArray.push(new Cell(x, y, symbol, color));
                 }
             }
@@ -133,7 +155,7 @@ class AsciiEffect {
             this.#imageCellArray[i].draw(this.#ctx);
         }
     }
-    draw(cellSize) {
+    draw(cellSize, arr) {
         this.#scanImage(cellSize);
         this.#makeAscii();
     }
@@ -147,9 +169,28 @@ function handleSlider() {
         ctx.drawImage(image1, 0, 0, canvas.width, canvas.height);
     } else {
         inputLabel.textContent = `Resolution: ${sizeSlider.value}px`;
-        // ctx.font = parseInt(sizeSlider.value) * 2 + 'px monospace';
+        // ctx.font = parseInt(sizeSlider.value) * 1.5 + 'px monospace';
         effect.draw(parseInt(sizeSlider.value));
     }
+}
+
+
+
+function handleJpSet() {
+    charIndex = 0;
+    effect.draw(parseInt(sizeSlider.value));
+}
+function handleLetterSet() {
+    charIndex = 1;
+    effect.draw(parseInt(sizeSlider.value));
+}
+function handleSymSet() {
+    charIndex = 2;
+    effect.draw(parseInt(sizeSlider.value));
+}
+function handleBinSet() {
+    charIndex = 3;
+    effect.draw(parseInt(sizeSlider.value));
 }
 
 image1.onload = function initialize() {
