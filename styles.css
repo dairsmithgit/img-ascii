@@ -23,11 +23,15 @@ body {
   border: 5px solid white;
   max-height: 100%;
   max-width: 100%;
+  margin-top: 100px;
+  margin-bottom: 1rem;
 }
 
 .controls {
   display: flex;
+  align-items: center;
   width: 100%;
+  margin: 8px;
 }
 
 .controls > input {
@@ -38,4 +42,40 @@ body {
   width: 35%;
   color: white;
   font-size: 16px;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+.symbolControl {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 8px;
+}
+
+.buttons {
+  width: 60%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.buttons > button {
+  padding: 0.5rem;
+  width: 100px;
+  border-style: none;
+  border: 1px solid white;
+  background-color: black;
+  color: white;
+}
+
+.buttons > button:hover {
+  background-color: white;
+  color: black;
+  cursor: pointer;
+}
+
+.style-line {
+  border: 1px solid white;
+  margin: 8px;
+  width: 100%;
 }

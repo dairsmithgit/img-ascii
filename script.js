@@ -8,16 +8,23 @@ image1.src = exampleImgs[0];
 
 const sizeSlider = document.getElementById('resolution');
 const inputLabel = document.getElementById('resolutionLabel');
+
 const japaneseBtn = document.getElementById('japanese');
 const lettersBtn = document.getElementById('letters');
 const symbolsBtn = document.getElementById('symbols');
 const binaryBtn = document.getElementById('binary');
 
-// event listeners for controls
+const defaultFontBtn = document.getElementById('default');
+const monoFontBtn = document.getElementById('monospace');
+const serifFontBtn = document.getElementById('serif');
+const fantasyFontBtn = document.getElementById('fantasy');
+
+// event listener for slider
 sizeSlider.addEventListener('change', () => {
     handleSlider();
 });
 
+// event listener for character set
 japaneseBtn.addEventListener('click', () => {
     handleJpSet();
 });
@@ -29,6 +36,20 @@ symbolsBtn.addEventListener('click', () => {
 });
 binaryBtn.addEventListener('click', () => {
     handleBinSet();
+});
+
+// event listener for fonts
+defaultFontBtn.addEventListener('click', () => {
+    handleDefaultFont();
+});
+monoFontBtn.addEventListener('click', () => {
+    handleMonoFont();
+});
+serifFontBtn.addEventListener('click', () => {
+    handleSerifFont();
+});
+fantasyFontBtn.addEventListener('click', () => {
+    handleFantasyFont();
 });
 
 // cell class
@@ -127,7 +148,7 @@ class AsciiEffect {
         }
     }
 
-    #scanImage(cellSize, arr) {
+    #scanImage(cellSize) {
         this.#imageCellArray = [];
         for (let y = 0; y < this.#pixels.height; y += cellSize) {
             for (let x = 0; x < this.#pixels.width; x += cellSize) {
@@ -155,11 +176,16 @@ class AsciiEffect {
             this.#imageCellArray[i].draw(this.#ctx);
         }
     }
-    draw(cellSize, arr) {
+    draw(cellSize) {
         this.#scanImage(cellSize);
         this.#makeAscii();
     }
 }
+
+let fontIndex = 0;
+let fonts = ['sans-serif', 'monospace', 'serif', 'fantasy'];
+
+let fontSize = 10;
 
 let effect;
 
@@ -169,13 +195,13 @@ function handleSlider() {
         ctx.drawImage(image1, 0, 0, canvas.width, canvas.height);
     } else {
         inputLabel.textContent = `Resolution: ${sizeSlider.value}px`;
-        // ctx.font = parseInt(sizeSlider.value) * 1.5 + 'px monospace';
+        ctx.font = fontSize + `px ${fonts[fontIndex]}`;
         effect.draw(parseInt(sizeSlider.value));
     }
 }
 
 
-
+// functions to set character sets
 function handleJpSet() {
     charIndex = 0;
     effect.draw(parseInt(sizeSlider.value));
@@ -191,6 +217,32 @@ function handleSymSet() {
 function handleBinSet() {
     charIndex = 3;
     effect.draw(parseInt(sizeSlider.value));
+}
+
+// functions to set fonts
+function handleDefaultFont() {
+    fontIndex = 0;
+    ctx.font = fontSize + `px ${fonts[fontIndex]}`;
+    effect.draw(parseInt(sizeSlider.value));
+    console.log(ctx.font);
+}
+function handleMonoFont() {
+    fontIndex = 1;
+    ctx.font = fontSize + `px ${fonts[fontIndex]}`;
+    effect.draw(parseInt(sizeSlider.value));
+    console.log(ctx.font);
+}
+function handleSerifFont() {
+    fontIndex = 2;
+    ctx.font = fontSize + `px ${fonts[fontIndex]}`;
+    effect.draw(parseInt(sizeSlider.value));
+    console.log(ctx.font);
+}
+function handleFantasyFont() {
+    fontIndex = 3;
+    ctx.font = fontSize + `px ${fonts[fontIndex]}`;
+    effect.draw(parseInt(sizeSlider.value));
+    console.log(ctx.font);
 }
 
 image1.onload = function initialize() {

@@ -22,26 +22,35 @@
           value="10"
         />
       </div>
-      <div class="symbolControl">
+      <span class="style-line"></span>
+      <div class="controls">
         <label for="symbol" id="symbolLabel">Choose Character Set</label>
-        <button
-          class="char-button"
-          id="japanese"
-          name="symbol"
-          value="#hiragana"
-        >
-          Japanese
-        </button>
-        <button class="char-button" id="letters" name="symbol" value="#letters">
-          Letters
-        </button>
-        <button class="char-button" id="symbols" name="symbol" value="#symbols">
-          Symbols
-        </button>
-        <button class="char-button" id="binary" name="symbol" value="#binary">
-          Binary
-        </button>
+        <div class="buttons">
+          <button class="char-button" id="japanese" name="symbol">
+            Japanese
+          </button>
+          <button class="char-button" id="letters" name="symbol">
+            Letters
+          </button>
+          <button class="char-button" id="symbols" name="symbol">
+            Symbols
+          </button>
+          <button class="char-button" id="binary" name="symbol">Binary</button>
+        </div>
       </div>
+      <span class="style-line"></span>
+      <div class="controls">
+        <label for="font" id="fontLabel">Choose Font</label>
+        <div class="buttons">
+          <button class="font-button" id="default" name="font">Default</button>
+          <button class="font-button" id="monospace" name="font">
+            Monospace
+          </button>
+          <button class="font-button" id="serif" name="font">Serif</button>
+          <button class="font-button" id="fantasy" name="font">Fantasy</button>
+        </div>
+      </div>
+      <span class="style-line"></span>
     </div>
 
     <script src="script.js"></script>
