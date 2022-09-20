@@ -9,7 +9,7 @@ body {
 }
 
 .container {
-  position: absolute;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -19,11 +19,53 @@ body {
   padding: 32px;
 }
 
+.actionButtons {
+  width: 100%;
+  margin: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.imgUploader {
+  display: none;
+}
+
+.customUploader {
+  color: white;
+  border: 1px solid white;
+  padding: 1rem;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: medium;
+}
+
+.customUploader:hover {
+  cursor: pointer;
+  background-color: white;
+  color: black;
+}
+
+.download-button {
+  background-color: black;
+  color: white;
+  border: 1px solid white;
+  padding: 1rem;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: medium;
+}
+
+.download-button:hover {
+  cursor: pointer;
+  background-color: white;
+  color: black;
+}
+
 #canvas1 {
   border: 5px solid white;
   max-height: 100%;
   max-width: 100%;
-  margin-top: 100px;
+  margin-top: 1rem;
   margin-bottom: 1rem;
 }
 

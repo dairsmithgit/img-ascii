@@ -3,8 +3,18 @@ const ctx = canvas.getContext('2d');
 
 const exampleImgs = ['images/railway1.jpeg', 'images/madlib1.png', 'images/nintendods.png', 'images/arch-linux.png', 'images/apple1.png'];
 
+const reader = new FileReader();
 const image1 = new Image();
-image1.src = exampleImgs[0];
+
+const imgUpload = (e) => {
+    reader.onload = () => {
+        image1.src = reader.result;
+    }
+    reader.readAsDataURL(e.target.files[0]);
+}
+
+const imgUploader = document.getElementById('imgUploader');
+const imgDownloader = document.getElementById('downloadButton');
 
 const sizeSlider = document.getElementById('resolution');
 const inputLabel = document.getElementById('resolutionLabel');
@@ -18,6 +28,12 @@ const defaultFontBtn = document.getElementById('default');
 const monoFontBtn = document.getElementById('monospace');
 const serifFontBtn = document.getElementById('serif');
 const fantasyFontBtn = document.getElementById('fantasy');
+
+// event listener for img upload
+imgUploader.addEventListener('change', imgUpload);
+
+// event listener for img download
+imgDownloader.addEventListener('click', download);
 
 // event listener for slider
 sizeSlider.addEventListener('change', () => {
@@ -251,4 +267,12 @@ image1.onload = function initialize() {
     effect = new AsciiEffect(ctx, image1.width, image1.height);
     console.log(effect);
     handleSlider();
+}
+
+function download() {
+    const finalImg = canvas.toDataURL();
+    const link = document.createElement('a');
+    link.href = finalImg;
+    link.download = 'ascii-image.png';
+    link.click();
 }
