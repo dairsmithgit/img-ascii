@@ -3,6 +3,7 @@ const ctx = canvas.getContext('2d');
 
 const exampleImgs = ['images/railway1.jpeg', 'images/madlib1.png', 'images/nintendods.png', 'images/arch-linux.png', 'images/apple1.png'];
 
+// setup to read files from local node server
 const reader = new FileReader();
 const image1 = new Image();
 
@@ -13,21 +14,36 @@ const imgUpload = (e) => {
     reader.readAsDataURL(e.target.files[0]);
 }
 
+// DOM bindings
+
+// UPLOAD/DOWNLOAD
 const imgUploader = document.getElementById('imgUploader');
 const imgDownloader = document.getElementById('downloadButton');
 
+// RESOLUTION
 const sizeSlider = document.getElementById('resolution');
 const inputLabel = document.getElementById('resolutionLabel');
 
+// CHARACTERS
 const japaneseBtn = document.getElementById('japanese');
 const lettersBtn = document.getElementById('letters');
 const symbolsBtn = document.getElementById('symbols');
 const binaryBtn = document.getElementById('binary');
 
+// FONTS
 const defaultFontBtn = document.getElementById('default');
 const monoFontBtn = document.getElementById('monospace');
 const serifFontBtn = document.getElementById('serif');
 const fantasyFontBtn = document.getElementById('fantasy');
+
+// FONT SIZE
+const size4Btn = document.getElementById('size4');
+const size10Btn = document.getElementById('size10');
+const size16Btn = document.getElementById('size16');
+const size24Btn = document.getElementById('size24');
+const size32Btn = document.getElementById('size32');
+const size36Btn = document.getElementById('size36');
+const size40Btn = document.getElementById('size40');
 
 // event listener for img upload
 imgUploader.addEventListener('change', imgUpload);
@@ -66,6 +82,29 @@ serifFontBtn.addEventListener('click', () => {
 });
 fantasyFontBtn.addEventListener('click', () => {
     handleFantasyFont();
+});
+
+// event listeners for font size
+size4Btn.addEventListener('click', () => {
+    handleSize4();
+});
+size10Btn.addEventListener('click', () => {
+    handleSize10();
+});
+size16Btn.addEventListener('click', () => {
+    handleSize16();
+});
+size24Btn.addEventListener('click', () => {
+    handleSize24();
+});
+size32Btn.addEventListener('click', () => {
+    handleSize32();
+});
+size36Btn.addEventListener('click', () => {
+    handleSize36();
+});
+size40Btn.addEventListener('click', () => {
+    handleSize40();
 });
 
 // cell class
@@ -201,7 +240,7 @@ class AsciiEffect {
 let fontIndex = 0;
 let fonts = ['sans-serif', 'monospace', 'serif', 'fantasy'];
 
-let fontSize = 10;
+let fontSizes = [4, 10, 16, 24, 32, 36, 40];
 
 let effect;
 
@@ -211,7 +250,7 @@ function handleSlider() {
         ctx.drawImage(image1, 0, 0, canvas.width, canvas.height);
     } else {
         inputLabel.textContent = `Resolution: ${sizeSlider.value}px`;
-        ctx.font = fontSize + `px ${fonts[fontIndex]}`;
+        ctx.font = fontSizes[1] + `px ${fonts[fontIndex]}`;
         effect.draw(parseInt(sizeSlider.value));
     }
 }
@@ -221,18 +260,34 @@ function handleSlider() {
 function handleJpSet() {
     charIndex = 0;
     effect.draw(parseInt(sizeSlider.value));
+    japaneseBtn.classList.add('selected');
+    lettersBtn.classList.remove('selected');
+    symbolsBtn.classList.remove('selected');
+    binaryBtn.classList.remove('selected');
 }
 function handleLetterSet() {
     charIndex = 1;
     effect.draw(parseInt(sizeSlider.value));
+    japaneseBtn.classList.remove('selected');
+    lettersBtn.classList.add('selected');
+    symbolsBtn.classList.remove('selected');
+    binaryBtn.classList.remove('selected');
 }
 function handleSymSet() {
     charIndex = 2;
     effect.draw(parseInt(sizeSlider.value));
+    japaneseBtn.classList.remove('selected');
+    lettersBtn.classList.remove('selected');
+    symbolsBtn.classList.add('selected');
+    binaryBtn.classList.remove('selected');
 }
 function handleBinSet() {
     charIndex = 3;
     effect.draw(parseInt(sizeSlider.value));
+    japaneseBtn.classList.remove('selected');
+    lettersBtn.classList.remove('selected');
+    symbolsBtn.classList.remove('selected');
+    binaryBtn.classList.add('selected');
 }
 
 // functions to set fonts
@@ -241,26 +296,46 @@ function handleDefaultFont() {
     ctx.font = fontSize + `px ${fonts[fontIndex]}`;
     effect.draw(parseInt(sizeSlider.value));
     console.log(ctx.font);
+    defaultFontBtn.classList.add('selected');
+    monoFontBtn.classList.remove('selected');
+    serifFontBtn.classList.remove('selected');
+    fantasyFontBtn.classList.remove('selected');
 }
 function handleMonoFont() {
     fontIndex = 1;
     ctx.font = fontSize + `px ${fonts[fontIndex]}`;
     effect.draw(parseInt(sizeSlider.value));
     console.log(ctx.font);
+    defaultFontBtn.classList.remove('selected');
+    monoFontBtn.classList.add('selected');
+    serifFontBtn.classList.remove('selected');
+    fantasyFontBtn.classList.remove('selected');
 }
 function handleSerifFont() {
     fontIndex = 2;
     ctx.font = fontSize + `px ${fonts[fontIndex]}`;
     effect.draw(parseInt(sizeSlider.value));
     console.log(ctx.font);
+    defaultFontBtn.classList.remove('selected');
+    monoFontBtn.classList.remove('selected');
+    serifFontBtn.classList.add('selected');
+    fantasyFontBtn.classList.remove('selected');
 }
 function handleFantasyFont() {
     fontIndex = 3;
     ctx.font = fontSize + `px ${fonts[fontIndex]}`;
     effect.draw(parseInt(sizeSlider.value));
     console.log(ctx.font);
+    defaultFontBtn.classList.remove('selected');
+    monoFontBtn.classList.remove('selected');
+    serifFontBtn.classList.remove('selected');
+    fantasyFontBtn.classList.add('selected');
 }
 
+// functions to set font size
+
+
+// functions for init and download final img
 image1.onload = function initialize() {
     canvas.width = image1.width;
     canvas.height = image1.height;

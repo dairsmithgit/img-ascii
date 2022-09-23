@@ -121,3 +121,18 @@ body {
   margin: 8px;
   width: 100%;
 }
+
+.char-button.selected {
+  background-color: white;
+  color: black;
+}
+
+.font-button.selected {
+  background-color: white;
+  color: black;
+}
+
+.size-button.selected {
+  background-color: white;
+  color: black;
+}
