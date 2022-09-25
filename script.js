@@ -240,6 +240,7 @@ class AsciiEffect {
 let fontIndex = 0;
 let fonts = ['sans-serif', 'monospace', 'serif', 'fantasy'];
 
+let sizeIndex = 1;
 let fontSizes = [4, 10, 16, 24, 32, 36, 40];
 
 let effect;
@@ -250,7 +251,7 @@ function handleSlider() {
         ctx.drawImage(image1, 0, 0, canvas.width, canvas.height);
     } else {
         inputLabel.textContent = `Resolution: ${sizeSlider.value}px`;
-        ctx.font = fontSizes[1] + `px ${fonts[fontIndex]}`;
+        ctx.font = fontSizes[sizeIndex] + `px ${fonts[fontIndex]}`;
         effect.draw(parseInt(sizeSlider.value));
     }
 }
@@ -293,7 +294,7 @@ function handleBinSet() {
 // functions to set fonts
 function handleDefaultFont() {
     fontIndex = 0;
-    ctx.font = fontSize + `px ${fonts[fontIndex]}`;
+    ctx.font = fontSizes[sizeIndex] + `px ${fonts[fontIndex]}`;
     effect.draw(parseInt(sizeSlider.value));
     console.log(ctx.font);
     defaultFontBtn.classList.add('selected');
@@ -303,7 +304,7 @@ function handleDefaultFont() {
 }
 function handleMonoFont() {
     fontIndex = 1;
-    ctx.font = fontSize + `px ${fonts[fontIndex]}`;
+    ctx.font = fontSizes[sizeIndex] + `px ${fonts[fontIndex]}`;
     effect.draw(parseInt(sizeSlider.value));
     console.log(ctx.font);
     defaultFontBtn.classList.remove('selected');
@@ -313,7 +314,7 @@ function handleMonoFont() {
 }
 function handleSerifFont() {
     fontIndex = 2;
-    ctx.font = fontSize + `px ${fonts[fontIndex]}`;
+    ctx.font = fontSizes[sizeIndex] + `px ${fonts[fontIndex]}`;
     effect.draw(parseInt(sizeSlider.value));
     console.log(ctx.font);
     defaultFontBtn.classList.remove('selected');
@@ -323,7 +324,7 @@ function handleSerifFont() {
 }
 function handleFantasyFont() {
     fontIndex = 3;
-    ctx.font = fontSize + `px ${fonts[fontIndex]}`;
+    ctx.font = fontSizes[sizeIndex] + `px ${fonts[fontIndex]}`;
     effect.draw(parseInt(sizeSlider.value));
     console.log(ctx.font);
     defaultFontBtn.classList.remove('selected');
@@ -333,7 +334,90 @@ function handleFantasyFont() {
 }
 
 // functions to set font size
-
+function handleSize4() {
+    sizeIndex = 0;
+    ctx.font = fontSizes[sizeIndex] + `px ${fonts[fontIndex]}`;
+    effect.draw(parseInt(sizeSlider.value));
+    size4Btn.classList.add('selected');
+    size10Btn.classList.remove('selected');
+    size16Btn.classList.remove('selected');
+    size24Btn.classList.remove('selected');
+    size32Btn.classList.remove('selected');
+    size36Btn.classList.remove('selected');
+    size40Btn.classList.remove('selected');
+}
+function handleSize10() {
+    sizeIndex = 1;
+    ctx.font = fontSizes[sizeIndex] + `px ${fonts[fontIndex]}`;
+    effect.draw(parseInt(sizeSlider.value));
+    size4Btn.classList.remove('selected');
+    size10Btn.classList.add('selected');
+    size16Btn.classList.remove('selected');
+    size24Btn.classList.remove('selected');
+    size32Btn.classList.remove('selected');
+    size36Btn.classList.remove('selected');
+    size40Btn.classList.remove('selected');
+}
+function handleSize16() {
+    sizeIndex = 2;
+    ctx.font = fontSizes[sizeIndex] + `px ${fonts[fontIndex]}`;
+    effect.draw(parseInt(sizeSlider.value));
+    size4Btn.classList.remove('selected');
+    size10Btn.classList.remove('selected');
+    size16Btn.classList.add('selected');
+    size24Btn.classList.remove('selected');
+    size32Btn.classList.remove('selected');
+    size36Btn.classList.remove('selected');
+    size40Btn.classList.remove('selected');
+}
+function handleSize24() {
+    sizeIndex = 3;
+    ctx.font = fontSizes[sizeIndex] + `px ${fonts[fontIndex]}`;
+    effect.draw(parseInt(sizeSlider.value));
+    size4Btn.classList.remove('selected');
+    size10Btn.classList.remove('selected');
+    size16Btn.classList.remove('selected');
+    size24Btn.classList.add('selected');
+    size32Btn.classList.remove('selected');
+    size36Btn.classList.remove('selected');
+    size40Btn.classList.remove('selected');
+}
+function handleSize32() {
+    sizeIndex = 4;
+    ctx.font = fontSizes[sizeIndex] + `px ${fonts[fontIndex]}`;
+    effect.draw(parseInt(sizeSlider.value));
+    size4Btn.classList.remove('selected');
+    size10Btn.classList.remove('selected');
+    size16Btn.classList.remove('selected');
+    size24Btn.classList.remove('selected');
+    size32Btn.classList.add('selected');
+    size36Btn.classList.remove('selected');
+    size40Btn.classList.remove('selected');
+}
+function handleSize36() {
+    sizeIndex = 5;
+    ctx.font = fontSizes[sizeIndex] + `px ${fonts[fontIndex]}`;
+    effect.draw(parseInt(sizeSlider.value));
+    size4Btn.classList.remove('selected');
+    size10Btn.classList.remove('selected');
+    size16Btn.classList.remove('selected');
+    size24Btn.classList.remove('selected');
+    size32Btn.classList.remove('selected');
+    size36Btn.classList.add('selected');
+    size40Btn.classList.remove('selected');
+}
+function handleSize40() {
+    sizeIndex = 6;
+    ctx.font = fontSizes[sizeIndex] + `px ${fonts[fontIndex]}`;
+    effect.draw(parseInt(sizeSlider.value));
+    size4Btn.classList.remove('selected');
+    size10Btn.classList.remove('selected');
+    size16Btn.classList.remove('selected');
+    size24Btn.classList.remove('selected');
+    size32Btn.classList.remove('selected');
+    size36Btn.classList.remove('selected');
+    size40Btn.classList.add('selected');
+}
 
 // functions for init and download final img
 image1.onload = function initialize() {
