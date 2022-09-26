@@ -45,6 +45,14 @@ const size32Btn = document.getElementById('size32');
 const size36Btn = document.getElementById('size36');
 const size40Btn = document.getElementById('size40');
 
+// COLOR SCHEME
+const defaultColor = document.getElementById('default');
+const matrixColor = document.getElementById('matrix');
+const blueColor = document.getElementById('blue');
+const neon1Color = document.getElementById('neon1');
+const neon2Color = document.getElementById('neon2');
+const neon3Color = document.getElementById('neon3');
+
 // event listener for img upload
 imgUploader.addEventListener('change', imgUpload);
 
@@ -105,6 +113,26 @@ size36Btn.addEventListener('click', () => {
 });
 size40Btn.addEventListener('click', () => {
     handleSize40();
+});
+
+// event listeners for color controls
+defaultColor.addEventListener('click', () => {
+    handleDefaultColor();
+});
+matrixColor.addEventListener('click', () => {
+    handleMatrixColor();
+});
+blueColor.addEventListener('click', () => {
+    handleBlueColor();
+});
+neon1Color.addEventListener('click', () => {
+    handleNeon1Color();
+});
+neon2Color.addEventListener('click', () => {
+    handleNeon2Color();
+});
+neon3Color.addEventListener('click', () => {
+    handleNeon3Color();
 });
 
 // cell class
@@ -417,6 +445,26 @@ function handleSize40() {
     size32Btn.classList.remove('selected');
     size36Btn.classList.remove('selected');
     size40Btn.classList.add('selected');
+}
+
+// functions to set colorScheme
+function handleDefaultColor() {
+
+}
+function handleMatrixColor() {
+
+}
+function handleBlueColor() {
+
+}
+function handleNeon1Color() {
+
+}
+function handleNeon2Color() {
+
+}
+function handleNeon3Color() {
+
 }
 
 // functions for init and download final img
