@@ -38,12 +38,12 @@ const fantasyFontBtn = document.getElementById('fantasy');
 
 // FONT SIZE
 const size4Btn = document.getElementById('size4');
+const size6Btn = document.getElementById('size6');
 const size10Btn = document.getElementById('size10');
 const size16Btn = document.getElementById('size16');
 const size24Btn = document.getElementById('size24');
 const size32Btn = document.getElementById('size32');
 const size36Btn = document.getElementById('size36');
-const size40Btn = document.getElementById('size40');
 
 // COLOR SCHEME
 const defaultColor = document.getElementById('default');
@@ -96,6 +96,9 @@ fantasyFontBtn.addEventListener('click', () => {
 size4Btn.addEventListener('click', () => {
     handleSize4();
 });
+size6Btn.addEventListener('click', () => {
+    handleSize6();
+});
 size10Btn.addEventListener('click', () => {
     handleSize10();
 });
@@ -110,9 +113,6 @@ size32Btn.addEventListener('click', () => {
 });
 size36Btn.addEventListener('click', () => {
     handleSize36();
-});
-size40Btn.addEventListener('click', () => {
-    handleSize40();
 });
 
 // event listeners for color controls
@@ -151,6 +151,11 @@ class Cell {
 
 let charIndex = 0;
 
+// color modifiers
+let originalColor = true;
+let greyscale = false;
+let white = false;
+
 // ascii class and private class fields
 class AsciiEffect {
     #imageCellArray = [];
@@ -168,10 +173,10 @@ class AsciiEffect {
         console.log(this.#pixels.data);
     }
 
-    // arrays with characters I want to use
-    #japanese = ['の', 'か', 'と', 'い', 'る', 'ン', 'ト', 'ス', 'ル', 'は', 'イ', 'に', 'ツ', 'カ', 'テ', 'コ', 'ホ', 'た', 'ム', 'ナ', 'を', 'ケ', 'て', 'ヌ', 'ヘ'];
+    // character sets
+    #japanese = ['の', 'か', 'は', 'ホ', 'る', 'を', 'ト', 'ス', 'ル', 'と', 'イ', 'に', 'ツ', 'カ', 'テ', 'コ', 'い', 'た', 'ム', 'ナ', 'ン', 'ケ', 'て', 'ヌ', 'ヘ'];
     #letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y'];
-    #symbols = ['.', '[', '^', '*', ']', '/', ':', '_', '%', '>', '(', ')', '~', '•', ';', '&', '£', '¶', '$', '#', 'R', 'E', 'A', 'L', 'M'];
+    #symbols = ['R', 'E', 'A', 'L', 'M', '&', '£', '¶', '$', '#', '%', '@', '0', '=', '&', 'A', 'L', 'M', '-', '£', '¶', '~', ':', '/', ',', '.'];
     #binary = ['0', '1', '0', '1', '0', '1', '0', '1', '0', '1', '0', '1', '0', '1', '0', '1', '0', '1', '0', '1', '0', '1', '0', '1', '0'];
 
     #characterSet = [this.#japanese, this.#letters, this.#symbols, this.#binary];
@@ -240,12 +245,20 @@ class AsciiEffect {
                 const pos = (posY * this.#pixels.width) + posX;
 
                 if (this.#pixels.data[pos + 3] > 128) {
-                    const red = this.#pixels.data[pos];
-                    const green = this.#pixels.data[pos + 1];
-                    const blue = this.#pixels.data[pos + 2];
+                    let red = this.#pixels.data[pos];
+                    let green = this.#pixels.data[pos + 1];
+                    let blue = this.#pixels.data[pos + 2];
                     const total = red + green + blue;
                     const averageColorValue = total / 3;
-                    const color = `rgb(${red}, ${green}, ${blue})`;
+                    let color;
+                    if (originalColor) {
+                        color = `rgb(${red}, ${green}, ${blue})`;
+                    } else if (greyscale) {
+                        color = `rgb(${red / 3}, ${green / 3}, ${blue / 3})`;
+                    } else if (white) {
+                        color = `rgb(${255}, ${255}, ${255})`;
+                    }
+
                     const symbol = this.#convertToSymbol(averageColorValue, this.#characterSet[charIndex]);
                     if (total > 30) this.#imageCellArray.push(new Cell(x, y, symbol, color));
                 }
@@ -268,8 +281,8 @@ class AsciiEffect {
 let fontIndex = 0;
 let fonts = ['sans-serif', 'monospace', 'serif', 'fantasy'];
 
-let sizeIndex = 1;
-let fontSizes = [4, 10, 16, 24, 32, 36, 40];
+let sizeIndex = 2;
+let fontSizes = [4, 6, 10, 16, 24, 32, 36];
 
 let effect;
 
@@ -367,95 +380,116 @@ function handleSize4() {
     ctx.font = fontSizes[sizeIndex] + `px ${fonts[fontIndex]}`;
     effect.draw(parseInt(sizeSlider.value));
     size4Btn.classList.add('selected');
+    size6Btn.classList.remove('selected');
     size10Btn.classList.remove('selected');
     size16Btn.classList.remove('selected');
     size24Btn.classList.remove('selected');
     size32Btn.classList.remove('selected');
     size36Btn.classList.remove('selected');
-    size40Btn.classList.remove('selected');
 }
-function handleSize10() {
+function handleSize6() {
     sizeIndex = 1;
     ctx.font = fontSizes[sizeIndex] + `px ${fonts[fontIndex]}`;
     effect.draw(parseInt(sizeSlider.value));
     size4Btn.classList.remove('selected');
+    size6Btn.classList.add('selected');
+    size10Btn.classList.remove('selected');
+    size16Btn.classList.remove('selected');
+    size24Btn.classList.remove('selected');
+    size32Btn.classList.remove('selected');
+    size36Btn.classList.remove('selected');
+}
+function handleSize10() {
+    sizeIndex = 2;
+    ctx.font = fontSizes[sizeIndex] + `px ${fonts[fontIndex]}`;
+    effect.draw(parseInt(sizeSlider.value));
+    size4Btn.classList.remove('selected');
+    size6Btn.classList.remove('selected');
     size10Btn.classList.add('selected');
     size16Btn.classList.remove('selected');
     size24Btn.classList.remove('selected');
     size32Btn.classList.remove('selected');
     size36Btn.classList.remove('selected');
-    size40Btn.classList.remove('selected');
 }
 function handleSize16() {
-    sizeIndex = 2;
+    sizeIndex = 3;
     ctx.font = fontSizes[sizeIndex] + `px ${fonts[fontIndex]}`;
     effect.draw(parseInt(sizeSlider.value));
     size4Btn.classList.remove('selected');
+    size6Btn.classList.remove('selected');
     size10Btn.classList.remove('selected');
     size16Btn.classList.add('selected');
     size24Btn.classList.remove('selected');
     size32Btn.classList.remove('selected');
     size36Btn.classList.remove('selected');
-    size40Btn.classList.remove('selected');
 }
 function handleSize24() {
-    sizeIndex = 3;
+    sizeIndex = 4;
     ctx.font = fontSizes[sizeIndex] + `px ${fonts[fontIndex]}`;
     effect.draw(parseInt(sizeSlider.value));
     size4Btn.classList.remove('selected');
+    size6Btn.classList.remove('selected');
     size10Btn.classList.remove('selected');
     size16Btn.classList.remove('selected');
     size24Btn.classList.add('selected');
     size32Btn.classList.remove('selected');
     size36Btn.classList.remove('selected');
-    size40Btn.classList.remove('selected');
 }
 function handleSize32() {
-    sizeIndex = 4;
+    sizeIndex = 5;
     ctx.font = fontSizes[sizeIndex] + `px ${fonts[fontIndex]}`;
     effect.draw(parseInt(sizeSlider.value));
     size4Btn.classList.remove('selected');
+    size6Btn.classList.remove('selected');
     size10Btn.classList.remove('selected');
     size16Btn.classList.remove('selected');
     size24Btn.classList.remove('selected');
     size32Btn.classList.add('selected');
     size36Btn.classList.remove('selected');
-    size40Btn.classList.remove('selected');
 }
 function handleSize36() {
-    sizeIndex = 5;
+    sizeIndex = 6;
     ctx.font = fontSizes[sizeIndex] + `px ${fonts[fontIndex]}`;
     effect.draw(parseInt(sizeSlider.value));
     size4Btn.classList.remove('selected');
+    size6Btn.classList.remove('selected');
     size10Btn.classList.remove('selected');
     size16Btn.classList.remove('selected');
     size24Btn.classList.remove('selected');
     size32Btn.classList.remove('selected');
     size36Btn.classList.add('selected');
-    size40Btn.classList.remove('selected');
-}
-function handleSize40() {
-    sizeIndex = 6;
-    ctx.font = fontSizes[sizeIndex] + `px ${fonts[fontIndex]}`;
-    effect.draw(parseInt(sizeSlider.value));
-    size4Btn.classList.remove('selected');
-    size10Btn.classList.remove('selected');
-    size16Btn.classList.remove('selected');
-    size24Btn.classList.remove('selected');
-    size32Btn.classList.remove('selected');
-    size36Btn.classList.remove('selected');
-    size40Btn.classList.add('selected');
 }
 
 // functions to set colorScheme
 function handleDefaultColor() {
-
+    if (originalColor) {
+        return
+    } else {
+        originalColor = true;
+        greyscale = false;
+        white = false;
+        effect.draw(parseInt(sizeSlider.value));
+    }
 }
 function handleMatrixColor() {
-
+    if (greyscale) {
+        return
+    } else {
+        originalColor = false;
+        greyscale = true;
+        white = false;
+        effect.draw(parseInt(sizeSlider.value));
+    }
 }
 function handleBlueColor() {
-
+    if (white) {
+        return
+    } else {
+        originalColor = false;
+        greyscale = false;
+        white = true;
+        effect.draw(parseInt(sizeSlider.value));
+    }
 }
 function handleNeon1Color() {
 
