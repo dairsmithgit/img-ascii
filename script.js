@@ -3,6 +3,48 @@ const ctx = canvas.getContext('2d');
 
 const exampleImgs = ['images/railway1.jpeg', 'images/madlib1.png', 'images/nintendods.png', 'images/arch-linux.png', 'images/apple1.png'];
 
+const splashTexts = [
+    "Hacker!",
+    "It won't lit",
+    "Casual Computer",
+    "Check out Inspo!",
+    "I am Dair",
+    "Coding!",
+    "Next.js",
+    "C20H25N3O",
+    "4815162342 lines of code!",
+    "Frontend",
+    "I love Japan!",
+    "Thanks for watching.",
+    "Breathe.",
+    "Cyberpunk",
+    "Concerned Ape!",
+    "Experimental",
+    "Creative Coding",
+    "Haircuts for Men",
+    "Learning",
+    "Machine Learning",
+    "251 Celebi",
+    "Toro Inoue Station",
+    "Chakra UI",
+    "Node.js",
+    "PSP-1001",
+    "Austin, TX",
+    "Trains",
+    "Magic",
+    "async/await",
+    "SP-404 SX",
+    "Rooms within rooms",
+    "Bogus",
+    "Realms"
+];
+
+// run splash text every 3 seconds
+window.onload = () => {
+    setInterval(chooseSplash, 3000);
+
+}
+
 // setup to read files from local node server
 const reader = new FileReader();
 const image1 = new Image();
@@ -15,6 +57,9 @@ const imgUpload = (e) => {
 }
 
 // DOM bindings
+
+// SPLASH TEXT
+const splashElement = document.getElementById('splashText');
 
 // UPLOAD/DOWNLOAD
 const imgUploader = document.getElementById('imgUploader');
@@ -52,6 +97,13 @@ const blueColor = document.getElementById('blue');
 const neon1Color = document.getElementById('neon1');
 const neon2Color = document.getElementById('neon2');
 const neon3Color = document.getElementById('neon3');
+
+// func to pick splash texts
+function chooseSplash() {
+    let splash = splashTexts[Math.floor(Math.random() * splashTexts.length)];
+    splashElement.textContent = splash;
+
+}
 
 // event listener for img upload
 imgUploader.addEventListener('change', imgUpload);
